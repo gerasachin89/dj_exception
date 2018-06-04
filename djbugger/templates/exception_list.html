@@ -1,0 +1,97 @@
+{% extends "admin/base.html" %}
+{% block extrastyle %}
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2>Exceptions</h2>
+<hr>
+    {% if object_list %}
+    <table id="cars">
+          <tr>
+                 <th>Exception ID</th>
+                 <th>Exception</th>
+                 <th>Created at</th>
+                 <th>Status</th>
+                 <th>Detail</th>
+                 <th>Action</th>
+          </tr>
+
+        {% for exception in object_list %}
+            <tr>
+                <td>{{ exception.exception_id }}</td>
+                <td>{{ exception.exception }}</td>
+                <td>{{ exception.created }}</td>
+                <td><b>{{ exception.status }}</b></td>
+                <td><a href="{% url 'djbugger:exception_detail' exception.id %}" target="_blank" class="see_detail">View</a></td>
+                <td><a href="#" class="see_detail" data-toggle="modal" data-target="#myModal">Resolved</a></td>
+            </tr>
+
+            <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Are you sure you want to mark it as resolved?</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>This action will mark exception as resolved and remove it from the cureent exception list.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+          </div>
+
+
+        {% endfor %}
+    </table>
+          <div class="pagination">
+          <span class="step-links">
+              {% if object_list.has_previous %}
+                  <a href="?page=1">&laquo; first</a> ||
+                  <a href="?page={{ object_list.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+              </span>
+
+              {% if object_list.has_next %}
+                  <a href="?page={{ object_list.next_page_number }}">next</a> ||
+                  <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
+{% else %}
+    <p>No exceptions found!!! :(</p>
+{% endif %}
+
+{% endblock %}

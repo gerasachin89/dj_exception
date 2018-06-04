@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+{% block extrastyle %}
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Exceptions Details-</h1>
+<div class="row">
+    <div class="col-md-4"><b>User: </b>{{object.user}}</div>
+    <div class="col-md-4"><b>File Name: </b>{{object.file_name}}</div>
+    <div class="col-md-4"><b>Line Number: </b>{{object.line_number}}</div>
+</div>
+<div class="row">
+  <div class="col-md-4"><b>Bug Created: </b>{{object.created}}</div>
+  <div class="col-md-4"><b>Last Resolved: </b>{{object.resolved}}</div>
+  <div class="col-md-4"><b>Status: </b>{{status.status}}</div>
+</div>
+<div class="row">
+  <div class="col-md-4"><b>Request URL: </b>{{object.request_url}}</div>
+  <div class="col-md-4"><b>Request Method: </b>{{object.request_method}}</div>
+  <div class="col-md-4"><b>Type: </b>{{status.bug_type}}</div>
+</div>
+
+<div class="row">
+  <div class="col-md-12"><b>Exception: </b><code id="detail">{{ object.exception }}</code></div>
+</div>
+
+<h2><code id="detail">Exception Stack:</code></h2>
+<hr></hr>
+<code id>{{ object.detail|linebreaksbr}}</code>
+
+{% endblock %}
