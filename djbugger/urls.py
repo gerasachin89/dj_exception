@@ -6,6 +6,7 @@ from djbugger.views import ExceptionList, ExceptionDetail
 urlpatterns = [
     url(r'^$', views.ExceptionList.as_view(),name='exception_list'),
     url(r'detail/(?P<pk>\d+)$', views.ExceptionDetail.as_view(),name='exception_detail'),
+    url(r'resolved/(?P<pk>\d+)$', views.resolved,name='exception_resolved'),
 
     url(r'list/$', views.success,name='exception_list'),
    ]
